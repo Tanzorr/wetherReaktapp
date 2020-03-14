@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useEffect,useReducer}from 'react';
+import reducer from "./reducer";
 import './App.css';
+import {Ask} from "./Ask";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    const [state, dispatch] = useReducer(reducer, {})
+
+    console.log("state in App",state.lokalNov)
+
+    useEffect(()=>{
+        dispatch({
+            type:"getLocalTemperature"
+        })
+    },[])
+
+    useEffect(()=>{
+        dispatch({
+            type:"getLocalTemperature"
+        })
+    },[])
+
+    const getLokation =()=>{
+        dispatch({
+            type:'getColor'
+        })
+   }
+
+
+    return (
+    <div className="App" >
+      <h1>
+          Wether app</h1>
+        <Ask getLockation={getLokation}/>
     </div>
   );
 }
