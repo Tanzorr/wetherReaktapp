@@ -71,10 +71,12 @@ console.log("lockal storage lat",localStorage.lon)
 
 
 
+let LocalTemp = setlocaltemperature(localStorage.lat, localStorage.lon);
+
+console.log("localTemp", LocalTemp['localMin']);
 
 
-
-console.log("set lokal now",setlocaltemperature(localStorage.lat, localStorage.lon).lokalMax);
+console.log("set lokal now",setlocaltemperature(localStorage.lat, localStorage.lon));
 
 function setlocaltemperature(lat,lon) {
     let  result ={}

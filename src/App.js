@@ -1,40 +1,26 @@
-import React,{useEffect,useReducer}from 'react';
-import reducer from "./reducer";
+import React,{useEffect}from 'react';
+import {connect, Provider} from "react-redux";
+import {compose} from "redux";
+import store from "./redux/redux-store";
+
 import './App.css';
-import {Ask} from "./Ask";
+
+import Content from "./Content";
 
 function App() {
-
-    const [state, dispatch] = useReducer(reducer, {})
-
-    console.log("state in App",state.lokalNov)
-
-    useEffect(()=>{
-        dispatch({
-            type:"getLocalTemperature"
-        })
-    },[])
-
-    useEffect(()=>{
-        dispatch({
-            type:"getLocalTemperature"
-        })
-    },[])
-
-    const getLokation =()=>{
-        dispatch({
-            type:'getColor'
-        })
-   }
-
-
     return (
-    <div className="App" >
-      <h1>
-          Wether app</h1>
-        <Ask getLockation={getLokation}/>
-    </div>
-  );
+
+
+            <div className="App" >
+              <h1>Wether app</h1>
+                <Provider store = {store}>
+                      <Content/>
+                </Provider>
+            </div>
+
+  )
 }
 
-export default App;
+
+
+export default  App;
