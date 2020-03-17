@@ -1,12 +1,14 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 
-import thunkMiddleware from "react-thunk";
 
-
+import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
-import {reducer as formReducer} from 'redux-form';
 import wetherReducer from "./wether-reducer";
-import searchReducer from "./wether-reducer";
+import searchReducer from './search-reducer'
+
+
+
+
 
 let reducers = combineReducers({
     wetherReducer:wetherReducer,
@@ -15,11 +17,11 @@ let reducers = combineReducers({
 
 
 //let composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let store = createStore(reducers, composeWithDevTools());
+let store = createStore(reducers,composeWithDevTools(applyMiddleware(thunk)));
 
 window.store = store;
 
-console.log("in react redux",store)
+
 
 export  default store;
 

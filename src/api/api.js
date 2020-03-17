@@ -24,5 +24,12 @@ export const wetheerApi={
             }
 
         )
+    },
+
+    geCityId(cityName){
+        return axios.get(`api/location/search/?query=${cityName}`).then(
+            responce=>{
+                return responce.data
+            })
     }
 }
