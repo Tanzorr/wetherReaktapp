@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Ask} from "./Ask";
 import {getLocalCity, getLocalTemperature} from "./redux/wether-reducer";
-import {getUtherCityId} from "./redux/search-reducer";
+import {getUtherCityData, getUtherCityId} from "./redux/search-reducer";
 
 
 
@@ -24,6 +24,13 @@ import {getUtherCityId} from "./redux/search-reducer";
      },[])
 
 
+
+     useEffect(()=>{
+
+         props.getUtherCityData(props.cityUtherId)
+     },[props.cityUtherId])
+
+
      return<div style={{background:props.background}}>
          <h1>{props.city}</h1>
          <Ask/>
@@ -34,9 +41,12 @@ import {getUtherCityId} from "./redux/search-reducer";
      return {
          background:state.wetherReducer.background,
          city:state.wetherReducer.city,
-         cityId: state.wetherReducer.cityId
+         cityId: state.wetherReducer.cityId,
+         cityUtherId: state.searchReducer.cityId
+
+
      }
 
 }
 
- export default connect(mapStateToProps, {getLocalCity, getLocalTemperature, getUtherCityId})(Content);
+ export default connect(mapStateToProps, {getLocalCity, getLocalTemperature, getUtherCityId,getUtherCityData})(Content);
