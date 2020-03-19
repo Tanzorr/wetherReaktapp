@@ -8,6 +8,8 @@ let initialState={
     city:null,
     cityId:null,
     temperature:[],
+    wind_spead:null,
+    humidity:null,
 
     background:"green"
 
@@ -30,7 +32,9 @@ const wetherReducer =(state=initialState, action)=>{
         case  GET_LOCAL_TEMPERATURE :
             return {
                 ...state,
-                temperature: action.temperatureNow
+                temperature: action.temperatureNow,
+                wind_spead:action.wind,
+                humidity:action.cold
             }
 
         default:
@@ -38,11 +42,13 @@ const wetherReducer =(state=initialState, action)=>{
     }
 }
 
-export const setTemperatureAC = (temperatureNow =[])=>{
+export const setTemperatureAC = (temperatureNow =[],wind,cold)=>{
 
     return {
         type: GET_LOCAL_TEMPERATURE,
-        temperatureNow
+        temperatureNow,
+        wind,
+        cold
 
     }
 }
@@ -64,7 +70,7 @@ export  const  getLocalCity=()=>{
             let data = await wetheerApi.getKoordsWether(localStorage.lat,localStorage.lon)
                 console.log("data",data)
                 let cityName = data[0].title
-                let cityId = data[0]. woeid
+                let cityId = data[0].woeid
            dispach(setLocalCityAC(cityName,cityId))
         }
 
@@ -74,10 +80,17 @@ export  const  getLocalCity=()=>{
 
 export const getLocalTemperature=(cityId)=>{
     return async (dispach)=>{
-        let data = await wetheerApi.getCityWether(cityId, getDataForUrl())
-        console.log("sity info",data[0])
+        let data = await wetheerApi.getCityData(cityId)
+        console.log("sity info",data.consolidated_weather)
+        data = data.consolidated_weather;
 
-        dispach(setTemperatureAC([data[0].min_temp,data[0].max_temp,data[0].the_temp,]))
+        dispach(setTemperatureAC([
+                Math.floor( data[0].the_temp,3),
+                Math.floor(data[0].min_temp,3),
+                Math.floor(data[0].max_temp,3),],
+            Math.floor(data[0].wind_speed,3),
+            Math.floor( data[0].humidity,3)
+        ))
     }
 }
 

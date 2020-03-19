@@ -34,8 +34,8 @@ export const wetheerApi={
     },
 
 
-    getCityData(CityId){
-        return axios.get(`api/location/${CityId}/`).then(
+    getCityData(CityId, date=""){
+        return axios.get(`api/location/${CityId}/${date}`).then(
             responce=>{
                 return responce.data
             })

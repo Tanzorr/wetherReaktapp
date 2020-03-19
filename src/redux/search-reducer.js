@@ -8,8 +8,8 @@ const GET_SITY_DATA="GET_SITY_DATA"
 let initialState={
     cityId:null,
     temperature: [],
-    wind:null,
-    colds:null
+    wind_spead:null,
+    humidity:null
 
 }
 
@@ -26,8 +26,8 @@ const searchReducer=(state=initialState, action)=>{
             return {
                 ...state,
                 temperature: action.temperataure,
-                wind: action.wind,
-                colds:action.colds
+                wind_spead: action.wind_spead,
+                humidity:action.humidity
 
             }
 
@@ -46,12 +46,12 @@ export const setCityId=(cityId)=>{
     }
 }
 
-export const setCityData=(temperataure,wind,colds )=>{
+export const setCityData=(temperataure,wind_spead,humidity )=>{
     return{
         type:"GET_SITY_DATA",
         temperataure,
-        wind,
-        colds
+        wind_spead,
+        humidity
     }
 }
 
@@ -59,7 +59,7 @@ export const setCityData=(temperataure,wind,colds )=>{
 export const getUtherCityId= (cityName)=>{
     return async (dispatch)=>{
         let data = await wetheerApi.geCityId(cityName)
-        console.log("search data", data[0].woeid);
+
         dispatch(setCityId(data[0].woeid))
     }
 }
@@ -70,8 +70,14 @@ export const getUtherCityData = (cityId)=>{
 
         let data = await  wetheerApi.getCityData(cityId)
         console.log("serche city Data ", data.consolidated_weather[0])
+        console.log("data from search",data.title)
         let cityData= data.consolidated_weather[0]
-       dispatch(setCityData([cityData.the_temp,cityData.max_temp,cityData.min_temp], cityData.wind_speed, cityData.humidity))
+       dispatch(setCityData([
+           Math.floor(cityData.the_temp,2),
+               Math.floor(cityData.min_temp,2),
+               Math.floor(cityData.max_temp,2)],
+           Math.floor(cityData.wind_speed,2),
+           Math.floor(cityData.humidity,2)))
 
     }
 }
