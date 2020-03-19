@@ -22,3 +22,14 @@ export  const getDataForUrl=()=>{
     return data;
 }
 
+export function getColor(temperature) {
+        if(temperature<-10){
+            return "#00ffff"
+        }else if(temperature>-10 && temperature<10){
+            return "#fff700"
+        }else if(temperature>10 && temperature<30){
+            return "#ff8c00 "
+        }
+        return "green"
+}
+

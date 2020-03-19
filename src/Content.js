@@ -5,6 +5,7 @@ import {getLocalCity, getLocalTemperature} from "./redux/wether-reducer";
 import {getUtherCityData, getUtherCityId} from "./redux/search-reducer";
 import Form from "./form";
 import WetherData from "./WetherData";
+import {getColor} from "./functions";
 
 
 
@@ -50,10 +51,11 @@ import WetherData from "./WetherData";
             setUther(true)
         }
 
+        console.log("Temp Color",getColor(Gdata.temperature[0]))
+        console.log("Temp Temperature",Gdata.temperature[0])
 
-
-        return<div  className="content" style={{background:localData.background}}>
-         <h1>{localData.city}</h1>
+        return<div  className="content" style={{background:getColor(Gdata.temperature[0])}}>
+         <h1>{Gdata.city}</h1>
          <Ask showLocalData={ showLocalData}/>
          <div>
              <Form getUtehrCity={props.getUtherCityId}/>
@@ -74,9 +76,11 @@ import WetherData from "./WetherData";
          },
          serchReducer:{
              cityId: state.searchReducer.cityId,
+             city:state.searchReducer.cityName,
              temperature:state.searchReducer.temperature,
              wind_spead:state.searchReducer.wind_spead,
              humidity:state.searchReducer.humidity
+
          }
 
 

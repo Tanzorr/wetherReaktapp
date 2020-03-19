@@ -7,6 +7,7 @@ const GET_SITY_DATA="GET_SITY_DATA"
 
 let initialState={
     cityId:null,
+    cityName:null,
     temperature: [],
     wind_spead:null,
     humidity:null
@@ -20,7 +21,9 @@ const searchReducer=(state=initialState, action)=>{
         case GET_SITY_ID :
             return {
                 ...state,
-                cityId:action.cityId
+                cityId:action.cityId,
+                cityName: action.cityName
+
             }
         case GET_SITY_DATA:
             return {
@@ -39,10 +42,11 @@ const searchReducer=(state=initialState, action)=>{
 }
 
 
-export const setCityId=(cityId)=>{
+export const setCityId=(cityId,cityName)=>{
     return{
         type:"GET_SITY_ID",
-        cityId
+        cityId,
+        cityName
     }
 }
 
@@ -60,7 +64,7 @@ export const getUtherCityId= (cityName)=>{
     return async (dispatch)=>{
         let data = await wetheerApi.geCityId(cityName)
 
-        dispatch(setCityId(data[0].woeid))
+        dispatch(setCityId(data[0].woeid,cityName))
     }
 }
 
