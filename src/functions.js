@@ -1,15 +1,28 @@
+import Cookies from "js-cookie"
+
+
+
+
 export  function getLocalCoords() {
     if (navigator.geolocation) {
+
         navigator.geolocation.watchPosition(showPosition);
     } else {
         let error= "Geolocation is not supported by this browser.";
     }
     function showPosition(position) {
-        localStorage.setItem('lat',position.coords.latitude);
-        localStorage.setItem('lon',position.coords.longitude);
+        refresLocation(position.coords.latitude,position.coords.longitude)
+        Cookies.set('lat',position.coords.latitude );
+        Cookies.set('lon',position.coords.longitude );
+
     }
 
 }
+
+
+
+
+
 
 export  const getDataForUrl=()=>{
     var m_names =["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -32,4 +45,29 @@ export function getColor(temperature) {
         }
         return "green"
 }
+
+export function refresLocation(lat,lon) {
+    if(Cookies.get('lat')!==lat && Cookies.get('lon')!==lon){
+            Cookies.remove('lat')
+            Cookies.remove('lon')
+
+    }
+}
+
+
+export function validator(arg) {
+
+    let error = []
+    console.log("error",error)
+    if(arg.length ===0){
+        error.push("You shodnt add ampty strubg")
+    }else if(arg.match(/^[a-z]+$/i)){
+        error.push("You can use only latters")
+    }
+    if(error.length!==0){
+        alert(error[0])
+    }
+}
+
+
 

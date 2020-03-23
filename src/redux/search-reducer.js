@@ -1,4 +1,5 @@
 import {wetheerApi} from "../api/api"
+import {validator} from "../functions";
 
 const GET_SITY_ID= "GET_SITY_ID"
 const GET_SITY_DATA="GET_SITY_DATA"
@@ -61,6 +62,7 @@ export const setCityData=(temperataure,wind_spead,humidity )=>{
 
 
 export const getUtherCityId= (cityName)=>{
+    validator(cityName);
     return async (dispatch)=>{
         let data = await wetheerApi.geCityId(cityName)
 

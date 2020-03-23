@@ -1,6 +1,8 @@
 import React,{useEffect}from 'react';
 import {connect, Provider} from "react-redux";
-import {compose} from "redux";
+
+
+
 import store from "./redux/redux-store";
 
 import './App.css';
@@ -8,6 +10,8 @@ import './App.css';
 import Content from "./Content";
 
 function App() {
+
+
     return (
 
 

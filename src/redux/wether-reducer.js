@@ -1,6 +1,7 @@
 import {wetheerApi} from "../api/api"
+import Cookies from "js-cookie"
 
-import {getLocalCoords,getDataForUrl} from "../functions";
+import {getLocalCoords, getDataForUrl} from "../functions";
 const GET_LOCAL_CITY ="GET_LOCAL_CITY"
 const GET_LOCAL_TEMPERATURE="GET_LOCAL_TEMPERATURE"
 
@@ -65,9 +66,9 @@ export const setLocalCityAC = (city, cityId)=>{
 
 
 export  const  getLocalCity=()=>{
-    getLocalCoords()
+
     return  async (dispach)=>{
-            let data = await wetheerApi.getKoordsWether(localStorage.lat,localStorage.lon)
+            let data = await wetheerApi.getKoordsWether(Cookies.get('lat'),Cookies.get('lon'))
                 console.log("data",data)
                 let cityName = data[0].title
                 let cityId = data[0].woeid
@@ -75,6 +76,9 @@ export  const  getLocalCity=()=>{
         }
 
 }
+
+
+
 
 
 

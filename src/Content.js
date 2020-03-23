@@ -1,11 +1,12 @@
 import React, {useEffect,useState} from "react";
+import Cookies from "js-cookie"
 import {connect} from "react-redux";
 import {Ask} from "./Ask";
 import {getLocalCity, getLocalTemperature} from "./redux/wether-reducer";
 import {getUtherCityData, getUtherCityId} from "./redux/search-reducer";
 import Form from "./form";
 import WetherData from "./WetherData";
-import {getColor} from "./functions";
+import {getColor, getLocalCoords} from "./functions";
 
 
 
@@ -16,7 +17,21 @@ import {getColor} from "./functions";
 
      let [Gdata, setGdata]=useState(localData)
      let [Uther, setUther]=useState(false)
-        console.log("serch data",utherData)
+     let [Cookie, setCookie]=useState(false)
+
+     useEffect(()=>{
+         if (!Cookies.get('lon')&& !Cookies.get('lat')) {
+             let conf = window.confirm("Are you show ass your location ?")
+             if (conf) {
+                 getLocalCoords()
+                 setCookie(true)
+                 setTimeout( props.getLocalCity,2000)
+             }
+         }
+         props.getLocalCity()
+         },[])
+
+
          useEffect(()=>{
              props.getUtherCityData(utherData.cityId)
 
@@ -34,13 +49,6 @@ import {getColor} from "./functions";
 
      console.log("General Data",Gdata)
      console.log("utherData",utherData)
-
-     useEffect(()=>{
-         props.getLocalCity()
-
-     },[])
-
-
 
      let showLocalData =()=>{
             props.getLocalTemperature(localData.cityId)
